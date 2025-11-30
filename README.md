@@ -1,16 +1,19 @@
-# holobox
+# Holobox 
 
-holobox app
+Holobox is a modern e‑commerce mobile application built with Flutter, featuring a clean product catalog, favorites, cart, notifications, and profile experience, all styled with a custom design system and SF Pro Display typography.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Rich product catalog with grid layout, categories, flash sales, and search for quick discovery.​
 
-A few resources to get you started if this is your first Flutter project:
+- Detailed product pages with imagery, price, description, and add‑to‑cart actions.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Shopping cart with quantity updates, item removal, and total price calculation.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Favorites and recently viewed sections powered by Provider for reactive state management.
+
+- Notifications center for promotions and order‑related updates.
+
+- Bottom navigation for fast access to Home, Catalog, Favorites, Cart, and Profile screens.
+
+- Centralized theming via AppTheme and AppColors, using SF Pro Display fonts and a shared custom app bar.​
