@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+
 import 'features/home/providers/home_provider.dart';
 import 'features/home/providers/notification_provider.dart';
 import 'features/home/providers/catalog_provider.dart';
 import 'features/home/providers/favorites_provider.dart';
-import 'features/home/providers/cart_provider.dart'; // ADD THIS LINE
+import 'features/home/providers/cart_provider.dart';
+import 'features/home/providers/recently_viewed_provider.dart';
+import 'features/auth/providers/auth_provider.dart'; // NEW: Added for authentication
+
 import 'features/home/screens/home_screen.dart';
 import 'features/home/screens/catalog_screen.dart';
 import 'features/home/screens/favorites_screen.dart';
 import 'features/home/screens/product_detail_screen.dart';
 import 'features/home/widgets/product_grid_item.dart';
-import 'features/home/models/product_model.dart'; // ADD THIS LINE TOO
+import 'features/home/models/product_model.dart';
 import 'core/theme/app_colors.dart';
-import 'features/home/providers/recently_viewed_provider.dart';
 
+import 'features/auth/screens/auth_wrapper.dart'; // NEW: Added for authentication flow
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,12 +39,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()), // NEW: Added AuthProvider FIRST
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => CatalogProvider()),
         ChangeNotifierProvider(create: (_) => FavoritesProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
-        ChangeNotifierProvider(create: (_) => RecentlyViewedProvider()),// ADD THIS LINE
+        ChangeNotifierProvider(create: (_) => RecentlyViewedProvider()),
       ],
       child: MaterialApp(
         title: 'Ecommerce App',
@@ -49,7 +54,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryPurple),
           useMaterial3: true,
         ),
-        home: const MainScreen(),
+        home: const AuthWrapper(), // CHANGED: From MainScreen() to AuthWrapper()
       ),
     );
   }
@@ -64,12 +69,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-
   final List<Widget> _screens = [
     const HomeScreen(),
     const CatalogScreen(),
     const CartScreen(),
-    const FavoritesScreenWithProvider(), // CHANGED THIS LINE
+    const FavoritesScreenWithProvider(),
     const ProfileScreen(),
   ];
 
@@ -182,6 +186,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
+// CartScreen - Keep exactly as you had it
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
@@ -264,9 +269,9 @@ class CartScreen extends StatelessWidget {
                     width: 1,
                   ),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
+                  children: [
                     Icon(
                       CupertinoIcons.trash,
                       color: AppColors.textSecondary,
@@ -512,9 +517,9 @@ class CartScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
                 'Delivery',
                 style: TextStyle(
@@ -582,7 +587,6 @@ class CartScreen extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  // Checkout logic
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Proceeding to checkout...'),
@@ -634,7 +638,7 @@ class CartScreen extends StatelessWidget {
   }
 }
 
-
+// FavoritesScreenWithProvider - Keep exactly as you had it
 class FavoritesScreenWithProvider extends StatelessWidget {
   const FavoritesScreenWithProvider({super.key});
 
@@ -643,7 +647,6 @@ class FavoritesScreenWithProvider extends StatelessWidget {
     return Consumer<FavoritesProvider>(
       builder: (context, favoritesProvider, child) {
         final favorites = favoritesProvider.favoriteProducts;
-
         return Scaffold(
           backgroundColor: AppColors.scaffoldBackground,
           body: SafeArea(
@@ -717,9 +720,9 @@ class FavoritesScreenWithProvider extends StatelessWidget {
                     width: 1,
                   ),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
+                  children: [
                     Icon(
                       CupertinoIcons.trash,
                       color: AppColors.textSecondary,
@@ -742,8 +745,6 @@ class FavoritesScreenWithProvider extends StatelessWidget {
       ),
     );
   }
-
-
 
   Widget _buildMinimalEmptyState(BuildContext context) {
     return Center(
@@ -794,7 +795,7 @@ class FavoritesScreenWithProvider extends StatelessWidget {
     );
   }
 
-  Widget _buildFavoritesList(BuildContext context, List favorites, FavoritesProvider provider) {
+  Widget _buildFavoritesList(BuildContext context, List<Product> favorites, FavoritesProvider provider) {
     return GridView.builder(
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -846,6 +847,7 @@ class FavoritesScreenWithProvider extends StatelessWidget {
   }
 }
 
+// ProfileScreen - Updated with logout functionality
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -980,25 +982,31 @@ class ProfileScreen extends StatelessWidget {
                       onTap: () {},
                     ),
                     const SizedBox(height: 20),
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: AppColors.error.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: AppColors.error.withOpacity(0.3),
-                          width: 1,
+                    // UPDATED: Sign Out Button with logout functionality
+                    GestureDetector(
+                      onTap: () {
+                        Provider.of<AuthProvider>(context, listen: false).logout();
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          color: AppColors.error.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: AppColors.error.withOpacity(0.3),
+                            width: 1,
+                          ),
                         ),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Sign Out',
-                          style: TextStyle(
-                            color: AppColors.error,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                        child: const Center(
+                          child: Text(
+                            'Sign Out',
+                            style: TextStyle(
+                              color: AppColors.error,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
