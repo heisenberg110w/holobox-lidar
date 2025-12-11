@@ -9,7 +9,7 @@ import 'features/home/providers/catalog_provider.dart';
 import 'features/home/providers/favorites_provider.dart';
 import 'features/home/providers/cart_provider.dart';
 import 'features/home/providers/recently_viewed_provider.dart';
-import 'features/auth/providers/auth_provider.dart'; // NEW: Added for authentication
+import 'features/auth/providers/auth_provider.dart';
 
 import 'features/home/screens/home_screen.dart';
 import 'features/home/screens/catalog_screen.dart';
@@ -17,9 +17,15 @@ import 'features/home/screens/favorites_screen.dart';
 import 'features/home/screens/product_detail_screen.dart';
 import 'features/home/widgets/product_grid_item.dart';
 import 'features/home/models/product_model.dart';
+import 'features/profile/screens/orders_screen.dart';
+import 'features/profile/screens/account_settings_screen.dart';
+import 'features/profile/screens/addresses_screen.dart';
+import 'features/profile/screens/payment_methods_screen.dart';
+import 'features/profile/screens/settings_screen.dart';
+import 'features/profile/screens/help_support_screen.dart';
 import 'core/theme/app_colors.dart';
 
-import 'features/auth/screens/auth_wrapper.dart'; // NEW: Added for authentication flow
+import 'features/auth/screens/auth_wrapper.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +45,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()), // NEW: Added AuthProvider FIRST
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => CatalogProvider()),
@@ -54,7 +60,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryPurple),
           useMaterial3: true,
         ),
-        home: const AuthWrapper(), // CHANGED: From MainScreen() to AuthWrapper()
+        home: const AuthWrapper(),
       ),
     );
   }
@@ -186,7 +192,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-// CartScreen - Keep exactly as you had it
+// CartScreen
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
@@ -638,7 +644,7 @@ class CartScreen extends StatelessWidget {
   }
 }
 
-// FavoritesScreenWithProvider - Keep exactly as you had it
+// FavoritesScreenWithProvider
 class FavoritesScreenWithProvider extends StatelessWidget {
   const FavoritesScreenWithProvider({super.key});
 
@@ -847,7 +853,7 @@ class FavoritesScreenWithProvider extends StatelessWidget {
   }
 }
 
-// ProfileScreen - Updated with logout functionality
+// ProfileScreen
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -856,172 +862,207 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Row(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              // Profile Header
+              Row(
                 children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.black.withOpacity(0.05),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      CupertinoIcons.person_fill,
-                      size: 20,
-                      color: AppColors.primaryPurple,
-                    ),
+                  const Icon(
+                    CupertinoIcons.person_fill,
+                    size: 24,
+                    color: AppColors.primaryPurple,
                   ),
-                  const SizedBox(width: 16),
-                  const Expanded(
-                    child: Text(
-                      'Profile',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textDark,
-                      ),
+                  const SizedBox(width: 12),
+                  const Text(
+                    'Profile',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textDark,
                     ),
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            AppColors.primaryPurple,
-                            AppColors.lightBlue,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(50),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primaryPurple.withOpacity(0.3),
-                            blurRadius: 15,
-                            offset: const Offset(0, 8),
-                          ),
-                        ],
-                      ),
-                      child: const Icon(
-                        CupertinoIcons.person_fill,
-                        size: 50,
-                        color: AppColors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'John Doe',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textDark,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    const Text(
-                      'john.doe@example.com',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    _buildProfileOption(
-                      icon: CupertinoIcons.person,
-                      title: 'Account Settings',
-                      onTap: () {},
-                    ),
-                    _buildProfileOption(
-                      icon: CupertinoIcons.location,
-                      title: 'Addresses',
-                      onTap: () {},
-                    ),
-                    _buildProfileOption(
-                      icon: CupertinoIcons.creditcard,
-                      title: 'Payment Methods',
-                      onTap: () {},
-                    ),
-                    _buildProfileOption(
-                      icon: CupertinoIcons.doc_text,
-                      title: 'Order History',
-                      onTap: () {},
-                    ),
-                    _buildProfileOption(
-                      icon: CupertinoIcons.bell,
-                      title: 'Notifications',
-                      onTap: () {},
-                    ),
-                    _buildProfileOption(
-                      icon: CupertinoIcons.question_circle,
-                      title: 'Help & Support',
-                      onTap: () {},
-                    ),
-                    _buildProfileOption(
-                      icon: CupertinoIcons.settings,
-                      title: 'Settings',
-                      onTap: () {},
-                    ),
-                    const SizedBox(height: 20),
-                    // UPDATED: Sign Out Button with logout functionality
-                    GestureDetector(
-                      onTap: () {
-                        Provider.of<AuthProvider>(context, listen: false).logout();
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: 50,
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: AppColors.error.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: AppColors.error.withOpacity(0.3),
-                            width: 1,
-                          ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Sign Out',
-                            style: TextStyle(
-                              color: AppColors.error,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
+              const SizedBox(height: 24),
+              // Profile Avatar & Info
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      AppColors.primaryPurple,
+                      AppColors.lightBlue,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primaryPurple.withOpacity(0.3),
+                      blurRadius: 15,
+                      offset: const Offset(0, 8),
                     ),
                   ],
                 ),
+                child: const Icon(
+                  CupertinoIcons.person_fill,
+                  size: 50,
+                  color: AppColors.white,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              const Text(
+                'John Doe',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textDark,
+                ),
+              ),
+              const SizedBox(height: 4),
+              const Text(
+                'john.doe@example.com',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 30),
+              // Profile Options
+              _buildProfileOption(
+                context: context,
+                icon: CupertinoIcons.person,
+                title: 'Account Settings',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const AccountSettingsScreen(),
+                    ),
+                  );
+                },
+              ),
+              _buildProfileOption(
+                context: context,
+                icon: CupertinoIcons.location,
+                title: 'Addresses',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const AddressesScreen(),
+                    ),
+                  );
+                },
+              ),
+              _buildProfileOption(
+                context: context,
+                icon: CupertinoIcons.creditcard,
+                title: 'Payment Methods',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const PaymentMethodsScreen(),
+                    ),
+                  );
+                },
+              ),
+              _buildProfileOption(
+                context: context,
+                icon: CupertinoIcons.doc_text,
+                title: 'Order History',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const OrdersScreen(),
+                    ),
+                  );
+                },
+              ),
+              _buildProfileOption(
+                context: context,
+                icon: CupertinoIcons.bell,
+                title: 'Notifications',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const SettingsScreen(),
+                    ),
+                  );
+                },
+              ),
+              _buildProfileOption(
+                context: context,
+                icon: CupertinoIcons.question_circle,
+                title: 'Help & Support',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const HelpSupportScreen(),
+                    ),
+                  );
+                },
+              ),
+              _buildProfileOption(
+                context: context,
+                icon: CupertinoIcons.settings,
+                title: 'Settings',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const SettingsScreen(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              // Sign Out Button
+              GestureDetector(
+                onTap: () {
+                  Provider.of<AuthProvider>(context, listen: false).logout();
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: AppColors.error.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: AppColors.error.withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Sign Out',
+                      style: TextStyle(
+                        color: AppColors.error,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildProfileOption({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required VoidCallback onTap,
