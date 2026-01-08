@@ -10,9 +10,9 @@ class AccountSettingsScreen extends StatefulWidget {
 }
 
 class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
-  final TextEditingController _nameController = TextEditingController(text: 'John Doe');
-  final TextEditingController _emailController = TextEditingController(text: 'john.doe@example.com');
-  final TextEditingController _phoneController = TextEditingController(text: '+1 234 567 8900');
+  final TextEditingController _nameController = TextEditingController(text: 'Dhiyab sir');
+  final TextEditingController _emailController = TextEditingController(text: 'dhiyabsirthoppil.com');
+  final TextEditingController _phoneController = TextEditingController(text: '+5426512541');
 
   @override
   void dispose() {

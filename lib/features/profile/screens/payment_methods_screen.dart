@@ -14,14 +14,14 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     {
       'type': 'Visa',
       'number': '**** **** **** 4532',
-      'holder': 'John Doe',
+      'holder': 'Dhiyab sir',
       'expiry': '12/25',
       'isDefault': true,
     },
     {
       'type': 'Mastercard',
       'number': '**** **** **** 8765',
-      'holder': 'John Doe',
+      'holder': 'Dhiyab boss',
       'expiry': '08/26',
       'isDefault': false,
     },

@@ -916,7 +916,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               const Text(
-                'John Doe',
+                'Dhiyab Sir',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
@@ -925,7 +925,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               const Text(
-                'john.doe@example.com',
+                'dhiyabthoppil@gmail.com',
                 style: TextStyle(
                   fontSize: 14,
                   color: AppColors.textSecondary,

@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
             children: [
-              // Holobox Logo Container - Using actual logo image
+
               Container(
                 width: 44,
                 height: 44,
@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                     height: 44,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
-                      // Fallback to icon if image fails to load
+                      // Fal
                       return Container(
                         decoration: BoxDecoration(
                           gradient: AppColors.primaryGradient,

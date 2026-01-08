@@ -13,16 +13,16 @@ class _AddressesScreenState extends State<AddressesScreen> {
   final List<Map<String, dynamic>> _addresses = [
     {
       'label': 'Home',
-      'name': 'John Doe',
-      'address': '123 Main Street, New York, NY 10001',
-      'phone': '+1 234 567 8900',
+      'name': 'Dhiyab sir',
+      'address': 'thoppil hse',
+      'phone': '+4512552322356',
       'isDefault': true,
     },
     {
       'label': 'Office',
-      'name': 'John Doe',
-      'address': '456 Business Ave, New York, NY 10002',
-      'phone': '+1 234 567 8900',
+      'name': 'Dhiyab boss',
+      'address': 'db enterprise',
+      'phone': '+541356565644',
       'isDefault': false,
     },
   ];
