@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+extension ColorWithValues on Color {
+  /// Extension to provide withValues(alpha: ) method
+  Color withValues({double? alpha}) {
+    return withOpacity(alpha ?? opacity);
+  }
+}
+
 class AppColors {
   // Prevent instantiation
   AppColors._();
