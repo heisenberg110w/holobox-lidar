@@ -16,40 +16,29 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.2'
+          flutter-version: "3.22.2"
 
-      - name: Install dependencies
+      - name: Install Flutter dependencies
         run: flutter pub get
 
       - name: Install CocoaPods
         run: |
           sudo gem install cocoapods
-          pod repo update
-
-      - name: Prepare iOS build
-        run: flutter build ios --release --no-codesign --config-only
+          cd ios
+          pod install
+          cd ..
 
       - name: Build unsigned iOS app
-        run: |
-          xcodebuild \
-            -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -sdk iphoneos \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY="" \
-            build
+        run: flutter build ios --release --no-codesign
 
       - name: Package IPA
         run: |
-          cd build/ios/iphoneos
           mkdir Payload
-          mv Runner.app Payload/
+          cp -r build/ios/Release-iphoneos/Runner.app Payload/
           zip -r unsigned.ipa Payload
 
-      - name: Upload IPA
+      - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
           name: unsigned-ipa
-          path: build/ios/iphoneos/unsigned.ipa
+          path: unsigned.ipa
