@@ -76,17 +76,17 @@ class AppColors {
   ];
 
   // Opacity Variants
-  static Color get primaryPurpleLight => primaryPurple.withOpacity(0.1);
-  static Color get primaryPurpleMedium => primaryPurple.withOpacity(0.2);
-  static Color get primaryPurpleHeavy => primaryPurple.withOpacity(0.8);
+  static Color get primaryPurpleLight => primaryPurple.withValues(alpha: 0.1);
+  static Color get primaryPurpleMedium => primaryPurple.withValues(alpha: 0.2);
+  static Color get primaryPurpleHeavy => primaryPurple.withValues(alpha: 0.8);
 
-  static Color get lightBlueLight => lightBlue.withOpacity(0.1);
-  static Color get lightBlueMedium => lightBlue.withOpacity(0.2);
-  static Color get lightBlueHeavy => lightBlue.withOpacity(0.8);
+  static Color get lightBlueLight => lightBlue.withValues(alpha: 0.1);
+  static Color get lightBlueMedium => lightBlue.withValues(alpha: 0.2);
+  static Color get lightBlueHeavy => lightBlue.withValues(alpha: 0.8);
 
-  static Color get warningOrangeLight => warningOrange.withOpacity(0.1);
-  static Color get warningOrangeMedium => warningOrange.withOpacity(0.2);
-  static Color get warningOrangeHeavy => warningOrange.withOpacity(0.8);
+  static Color get warningOrangeLight => warningOrange.withValues(alpha: 0.1);
+  static Color get warningOrangeMedium => warningOrange.withValues(alpha: 0.2);
+  static Color get warningOrangeHeavy => warningOrange.withValues(alpha: 0.8);
 
   // Shimmer Colors (for loading states)
   static const Color shimmerBase = Color(0xFFE5E7EB);
@@ -100,7 +100,7 @@ class AppColors {
 
   /// Get color with custom opacity
   static Color withCustomOpacity(Color color, double opacity) {
-    return color.withOpacity(opacity);
+    return color.withValues(alpha: opacity);
   }
 
   /// Get a random category color
@@ -136,7 +136,7 @@ class AppColors {
   /// Box Shadow Presets
   static List<BoxShadow> get cardShadow => [
     BoxShadow(
-      color: black.withOpacity(0.08),
+      color: black.withValues(alpha: 0.08),
       blurRadius: 10,
       offset: const Offset(0, 4),
     ),
@@ -144,7 +144,7 @@ class AppColors {
 
   static List<BoxShadow> get buttonShadow => [
     BoxShadow(
-      color: primaryPurple.withOpacity(0.3),
+      color: primaryPurple.withValues(alpha: 0.3),
       blurRadius: 8,
       offset: const Offset(0, 4),
     ),
@@ -152,7 +152,7 @@ class AppColors {
 
   static List<BoxShadow> get appBarShadow => [
     BoxShadow(
-      color: black.withOpacity(0.05),
+      color: black.withValues(alpha: 0.05),
       blurRadius: 4,
       offset: const Offset(0, 2),
     ),
@@ -177,7 +177,7 @@ class AppColors {
     border: Border.all(color: borderLight),
     boxShadow: [
       BoxShadow(
-        color: black.withOpacity(0.05),
+        color: black.withValues(alpha: 0.05),
         blurRadius: 4,
         offset: const Offset(0, 2),
       ),

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1058004726410",
+    "project_id": "holobox-b7d56",
+    "storage_bucket": "holobox-b7d56.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058004726410:android:79ff1f6f84ac1dadd6f373",
+        "android_client_info": {
+          "package_name": "com.example.holobox"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMGKzjFu3hGOmteDOqyenR_ItSdGVc2o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058004726410:android:160f9e5032c01a42d6f373",
+        "android_client_info": {
+          "package_name": "com.holobox.client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMGKzjFu3hGOmteDOqyenR_ItSdGVc2o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

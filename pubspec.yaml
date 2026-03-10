@@ -1,5 +1,5 @@
-name: holobox_admin
-description: "Holobox Admin iOS app (admin portal + LiDAR 3D scanning)"
+name: holobox
+description: "Holobox - Client app for ad submissions"
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -20,6 +20,7 @@ dependencies:
   image_picker: ^1.0.7
   path_provider: ^2.1.2
   uuid: ^4.3.3
+  url_launcher: ^6.2.5
 
 dev_dependencies:
   flutter_test:

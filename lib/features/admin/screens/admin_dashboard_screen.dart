@@ -3,26 +3,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_colors.dart';
 import 'product_submission_screen.dart';
-import 'admin_statistics_screen.dart';
-import 'pending_approvals_screen.dart';
-import 'admin_scan_screen.dart';
+import 'my_submissions_screen.dart';
+import 'analytics_screen.dart';
 import '../providers/admin_auth_provider.dart';
 
-class AdminDashboardScreen extends StatefulWidget {
-  const AdminDashboardScreen({super.key});
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
 
   @override
-  State<AdminDashboardScreen> createState() => _AdminDashboardScreenState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
+class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
     const ProductSubmissionScreen(),
-    const PendingApprovalsScreen(),
-    const AdminStatisticsScreen(),
-    const AdminScanScreen(),
+    const MySubmissionsScreen(),
+    const AnalyticsScreen(),
   ];
 
   @override
@@ -33,11 +31,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         backgroundColor: AppColors.white,
         elevation: 0,
         title: const Text(
-          'Admin Dashboard',
+          'Holobox',
           style: TextStyle(
             color: AppColors.textDark,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
           ),
         ),
         actions: [
@@ -61,7 +59,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           color: AppColors.white,
           boxShadow: [
             BoxShadow(
-              color: AppColors.black.withOpacity(0.05),
+              color: AppColors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, -2),
             ),
@@ -79,25 +77,19 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   0,
                   CupertinoIcons.add_circled,
                   CupertinoIcons.add_circled_solid,
-                  'Submit',
+                  'Post Ad',
                 ),
                 _buildNavItem(
                   1,
-                  CupertinoIcons.time,
-                  CupertinoIcons.time_solid,
-                  'Pending',
+                  CupertinoIcons.doc_text,
+                  CupertinoIcons.doc_text_fill,
+                  'My Ads',
                 ),
                 _buildNavItem(
                   2,
                   CupertinoIcons.chart_bar,
                   CupertinoIcons.chart_bar_fill,
-                  'Statistics',
-                ),
-                _buildNavItem(
-                  3,
-                  CupertinoIcons.cube_box,
-                  CupertinoIcons.cube_box_fill,
-                  'Scan',
+                  'Analytics',
                 ),
               ],
             ),
@@ -148,7 +140,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout from admin panel?'),
+        content: const Text('Are you sure you want to logout?'),
         actions: [
           CupertinoDialogAction(
             child: const Text('Cancel'),
@@ -158,7 +150,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             isDestructiveAction: true,
             onPressed: () {
               Navigator.pop(context);
-              context.read<AdminAuthProvider>().signOut();
+              context.read<ClientAuthProvider>().signOut();
             },
             child: const Text('Logout'),
           ),
@@ -167,3 +159,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     );
   }
 }
+
+// Keep old name as alias for compatibility
+typedef AdminDashboardScreen = DashboardScreen;
