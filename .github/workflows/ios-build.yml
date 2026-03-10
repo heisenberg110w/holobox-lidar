@@ -1,4 +1,4 @@
-name: Flutter iOS Build
+name: Build iOS IPA
 
 on:
   push:
@@ -10,7 +10,8 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -25,12 +26,26 @@ jobs:
           sudo gem install cocoapods
           pod repo update
 
-      - name: Build unsigned IPA
+      - name: Prepare iOS build
+        run: flutter build ios --release --no-codesign --config-only
+
+      - name: Build unsigned iOS app
         run: |
-          flutter build ios --release --no-codesign
+          xcodebuild \
+            -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -sdk iphoneos \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build
+
+      - name: Package IPA
+        run: |
           cd build/ios/iphoneos
           mkdir Payload
-          mv Runner.app Payload
+          mv Runner.app Payload/
           zip -r unsigned.ipa Payload
 
       - name: Upload IPA
